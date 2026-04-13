@@ -3,7 +3,6 @@ services:
   # --- Backend API Service ---
   - type: web
     name: cloudcalc-api
-    plan: free
     env: node
     rootDir: backend
     buildCommand: npm install
@@ -23,7 +22,6 @@ services:
   # --- Frontend Static Site ---
   - type: web
     name: cloudcalc-frontend
-    plan: free
     env: static
     rootDir: frontend
     buildCommand: npm install && npm run build
