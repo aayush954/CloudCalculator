@@ -311,41 +311,40 @@ Clear all calculations for a session.
 
 ## 🚢 Deployment
 
-### Backend → Render (Free Tier)
+### Best Method: Unified Deployment (One-Click Render Blueprint)
+*Use this to deploy both Frontend and Backend together in one place.*
 
-1. Push your code to GitHub
-2. Go to [render.com](https://render.com) → **New Web Service**
-3. Connect your GitHub repo
-4. Configure:
-   - **Root Directory:** `backend`
-   - **Build Command:** `npm install`
-   - **Start Command:** `node server.js`
-   - **Environment:** `Node`
-5. Add Environment Variables:
-   ```
-   NODE_ENV=production
-   MONGODB_URI=<your-atlas-uri>
-   CORS_ORIGIN=https://your-app.vercel.app
-   PORT=5000
-   ```
-6. Click **Deploy** — Render will give you a URL like `https://cloudcalc-api.onrender.com`
+1. Push your code to GitHub.
+2. Go to [Render Dashboard](https://dashboard.render.com).
+3. Click **New +** → **Blueprint**.
+4. Connect your GitHub repo.
+5. Render will detect the `render.yaml` file and prepare the services:
+   - `cloudcalc-api`: The backend web service.
+   - `cloudcalc-frontend`: The React static site.
+6. Enter your `MONGODB_URI` when prompted.
+7. Click **Apply**.
 
 ---
 
-### Frontend → Vercel
+### Alternative: Split Deployment (Render + Vercel)
+*Best for performance or if you prefer Vercel's Edge Network for the React app.*
 
-1. Go to [vercel.com](https://vercel.com) → **New Project**
-2. Import your GitHub repo
-3. Configure:
-   - **Root Directory:** `frontend`
-   - **Framework Preset:** Create React App
-   - **Build Command:** `npm run build`
-   - **Output Directory:** `build`
+#### 1. Backend → Render (Free Tier)
+1. Go to [render.com](https://render.com) → **New Web Service**.
+2. Connect your GitHub repo and set **Root Directory** to `backend`.
+3. Build Command: `npm install` | Start Command: `node server.js`.
 4. Add Environment Variables:
-   ```
-   REACT_APP_API_URL=https://cloudcalc-api.onrender.com
-   ```
-5. Click **Deploy**
+   - `NODE_ENV=production`
+   - `MONGODB_URI=<your-atlas-uri>`
+   - `CORS_ORIGIN=https://your-app.vercel.app`
+5. Click **Deploy**.
+
+#### 2. Frontend → Vercel
+1. Go to [vercel.com](https://vercel.com) → **New Project**.
+2. Import your GitHub repo and set **Root Directory** to `frontend`.
+3. Add Environment Variables:
+   - `REACT_APP_API_URL=https://your-backend.onrender.com`
+4. Click **Deploy**.
 
 ---
 
