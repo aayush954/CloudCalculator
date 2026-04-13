@@ -1,17 +1,19 @@
-# render.yaml — Render deployment configuration
+# render.yaml — Render Blueprint configuration for Unified Deployment
 services:
   # --- Backend API Service ---
   - type: web
     name: cloudcalc-api
+    plan: free
     env: node
     rootDir: backend
     buildCommand: npm install
     startCommand: node server.js
+    autoDeploy: true
     envVars:
       - key: NODE_ENV
         value: production
       - key: MONGODB_URI
-        sync: false   # Set manually in Render dashboard
+        sync: false   # Set manually in Render dashboard (or via Secret Group)
       - key: CORS_ORIGIN
         fromService:
           name: cloudcalc-frontend
@@ -24,13 +26,20 @@ services:
   # --- Frontend Static Site ---
   - type: static_site
     name: cloudcalc-frontend
+    plan: free
     env: static
     rootDir: frontend
     buildCommand: npm install && npm run build
     publishDir: build
+    autoDeploy: true
     envVars:
       - key: REACT_APP_API_URL
         fromService:
           name: cloudcalc-api
           type: web
           property: url
+    # Ensure React Router / SPAs work correctly on deep links
+    routes:
+      - type: rewrite
+        source: /*
+        destination: /index.html
