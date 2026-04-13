@@ -1,4 +1,4 @@
-# ☁️ CloudCalc — Multi-Cloud Cost Calculator
+#  CloudCalc — Multi-Cloud Cost Calculator
 
 A production-ready full-stack web application that compares cloud costs across **AWS**, **Azure**, and **Google Cloud** in real time.
 
@@ -23,7 +23,7 @@ A production-ready full-stack web application that compares cloud costs across *
 
 ---
 
-## 🗂 Project Structure
+##  Project Structure
 
 ```
 multi-cloud-calculator/
@@ -83,7 +83,7 @@ multi-cloud-calculator/
 
 ---
 
-## 🚀 Local Development Setup
+##  Local Development Setup
 
 ### Prerequisites
 - Node.js 18+
@@ -126,7 +126,7 @@ RATE_LIMIT_WINDOW_MS=900000
 RATE_LIMIT_MAX=100
 ```
 
-> ⚠️ If you skip MongoDB, the app still works — history features will be disabled gracefully.
+>  If you skip MongoDB, the app still works — history features will be disabled gracefully.
 
 **Frontend** (`frontend/.env`):
 ```bash
@@ -309,7 +309,7 @@ Clear all calculations for a session.
 
 ---
 
-## 🚢 Deployment
+##  Deployment
 
 ### Best Method: Unified Deployment (One-Click Render Blueprint)
 *Use this to deploy both Frontend and Backend together in one place.*
@@ -400,6 +400,6 @@ Replace the `calculateCosts` function in `pricingEngine.js` with API calls, keep
 
 ---
 
-## 📝 License
+##  License
 
 MIT — use freely for personal or commercial projects.
