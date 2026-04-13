@@ -17,27 +17,23 @@ services:
       - key: CORS_ORIGIN
         fromService:
           name: cloudcalc-frontend
-          type: web
+          type: static_site
           property: url
       - key: RATE_LIMIT_MAX
         value: "100"
     healthCheckPath: /api/health
 
   # --- Frontend Static Site ---
-  - type: web
+  - type: static_site
     name: cloudcalc-frontend
     plan: free
-    env: static
     rootDir: frontend
     buildCommand: npm install && npm run build
-    staticPublishPath: build
+    publishDir: build
     autoDeploy: true
     envVars:
       - key: REACT_APP_API_URL
-        fromService:
-          name: cloudcalc-api
-          type: web
-          property: url
+        sync: false   # Set to your Backend URL in Render dashboard
     # Ensure React Router / SPAs work correctly on deep links
     routes:
       - type: rewrite
