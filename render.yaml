@@ -1,5 +1,6 @@
 # render.yaml — Render deployment configuration
 services:
+  # --- Backend API Service ---
   - type: web
     name: cloudcalc-api
     env: node
@@ -12,7 +13,24 @@ services:
       - key: MONGODB_URI
         sync: false   # Set manually in Render dashboard
       - key: CORS_ORIGIN
-        sync: false   # Set to your Vercel frontend URL
+        fromService:
+          name: cloudcalc-frontend
+          type: static_site
+          property: url
       - key: RATE_LIMIT_MAX
         value: "100"
     healthCheckPath: /api/health
+
+  # --- Frontend Static Site ---
+  - type: static_site
+    name: cloudcalc-frontend
+    env: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    publishDir: build
+    envVars:
+      - key: REACT_APP_API_URL
+        fromService:
+          name: cloudcalc-api
+          type: web
+          property: url
