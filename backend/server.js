@@ -28,8 +28,14 @@ const limiter = rateLimit({
 });
 
 // ─── Middleware ───────────────────────────────────────────────
+const allowedOrigin = process.env.CORS_ORIGIN || "*";
+// Clean up origin URL to prevent trailing slash mismatches
+const finalOrigin = (allowedOrigin.endsWith('/') && allowedOrigin !== "*") 
+  ? allowedOrigin.slice(0, -1) 
+  : allowedOrigin;
+
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || "*",
+  origin: finalOrigin,
   methods: ["GET", "POST", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
