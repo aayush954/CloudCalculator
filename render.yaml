@@ -13,24 +13,24 @@ services:
       - key: NODE_ENV
         value: production
       - key: MONGODB_URI
-        sync: false   # Set manually in Render dashboard (or via Secret Group)
+        sync: false   # Set manually in Render dashboard
       - key: CORS_ORIGIN
         fromService:
           name: cloudcalc-frontend
-          type: static
+          type: web
           property: url
       - key: RATE_LIMIT_MAX
         value: "100"
     healthCheckPath: /api/health
 
   # --- Frontend Static Site ---
-  - type: static
+  - type: web
     name: cloudcalc-frontend
     plan: free
     env: static
     rootDir: frontend
     buildCommand: npm install && npm run build
-    publishDir: build
+    staticPublishPath: build
     autoDeploy: true
     envVars:
       - key: REACT_APP_API_URL
