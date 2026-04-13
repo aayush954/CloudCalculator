@@ -1,7 +1,9 @@
 // utils/api.js — Axios API client
 import axios from 'axios';
 
-const BASE_URL = process.env.REACT_APP_API_URL || '';
+// Clean up the URL to prevent double slashes (e.g. if URL ends with /)
+const rawUrl = process.env.REACT_APP_API_URL || '';
+const BASE_URL = rawUrl.endsWith('/') ? rawUrl.slice(0, -1) : rawUrl;
 
 const api = axios.create({
   baseURL: `${BASE_URL}/api`,
